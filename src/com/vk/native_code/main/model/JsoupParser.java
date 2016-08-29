@@ -20,13 +20,11 @@ public class JsoupParser extends Parser {
 	@Override
 	public void run() {
 		try {
-			int count=0;
-			long timeout = System.currentTimeMillis();
-			long start = Runtime.getRuntime().freeMemory();
 			Document htmlPage = Jsoup.connect(getURL()).get();
 			Elements links = htmlPage.select("a.desktop");
 			for (int i = 1; i < links.size(); i++) {
-				if (thread.isInterrupted())break;
+				if (thread.isInterrupted())
+					break;
 
 				URL absURL = new URL(links.eq(i).attr("abs:href"));
 				fileName = links.eq(i).text();
@@ -34,20 +32,13 @@ public class JsoupParser extends Parser {
 
 				if (!file.exists()) {
 					FileUtils.copyURLToFile(absURL, file);
-					count++;
 					controller.setTextToArea(fileName + "+\n");
-//					Thread.sleep(2000);
 				}
 			}
 			controller.setTextToArea("Success!\n");
-			System.out.println("Количество файлов: "+count);
-			System.out.println("Время выполнения: " + (System.currentTimeMillis() - timeout) + " ms.");
-			System.out.println("Ресурсы: " + ((start-Runtime.getRuntime().freeMemory())/1000)+" kb.");
 			stop();
-		}catch (IOException e1) {
+		} catch (IOException e1) {
 			e1.printStackTrace();
-//		} catch (InterruptedException e2) {
-//			Thread.currentThread().interrupt();
 		}
 
 	}

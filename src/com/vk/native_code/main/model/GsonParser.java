@@ -34,12 +34,9 @@ public class GsonParser extends Parser {
 	@Override
 	public void run() {
 		try {
-			
+
 			String jsonURL = getURL().replaceAll("html", "json");
 			URL url = new URL(jsonURL);
-			int count=0;
-			long timeout = System.currentTimeMillis();
-			long start = Runtime.getRuntime().freeMemory();
 			String htmlPage = connect(url);
 			String filePath;
 			File file;
@@ -67,23 +64,15 @@ public class GsonParser extends Parser {
 					if (!file.exists()) {
 						FileUtils.copyURLToFile(urlFiles, file);
 						controller.setTextToArea(fileName + "+\n");
-						count++;
-//						Thread.sleep(2000);
 					}
 				}
 			}
 			controller.setTextToArea("Success!\n");
-			System.out.println("Количество файлов: "+count);
-			System.out.println("Время выполнения: " + (System.currentTimeMillis() - timeout) + " ms.");
-			System.out.println("Ресурсы: " + ((start-Runtime.getRuntime().freeMemory())/1000)+" kb.");
 			stop();
 		} catch (MalformedURLException e) {
 			controller.getGsonFieldURL().setText("Set URL field!");
 		} catch (IOException ex) {
 			ex.printStackTrace();}
-//		} catch (InterruptedException e) {
-//			Thread.currentThread().interrupt();
-//		}
 
 	}
 }

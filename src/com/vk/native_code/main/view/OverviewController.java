@@ -99,8 +99,10 @@ public class OverviewController {
 			directoryChooser.setTitle("Open directory");
 			directoryChooser.setInitialDirectory(new File(currentDir));
 			File selectedDirectory = directoryChooser.showDialog(null);
-
-			nativeFieldPath.setText(selectedDirectory.getAbsolutePath() + File.separator);
+			if (selectedDirectory != null)
+				nativeFieldPath.setText(selectedDirectory.getAbsolutePath() + File.separator);
+			else
+				selectedDirectory = null;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -143,8 +145,11 @@ public class OverviewController {
 			directoryChooser.setTitle("Open directory");
 			directoryChooser.setInitialDirectory(new File(currentDir));
 			File selectedDirectory = directoryChooser.showDialog(null);
+			if (selectedDirectory != null)
+				jsoupFieldPath.setText(selectedDirectory.getAbsolutePath() + File.separator);
+			else
+				selectedDirectory = null;
 
-			jsoupFieldPath.setText(selectedDirectory.getAbsolutePath() + File.separator);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -187,8 +192,10 @@ public class OverviewController {
 			directoryChooser.setTitle("Open directory");
 			directoryChooser.setInitialDirectory(new File(currentDir));
 			File selectedDirectory = directoryChooser.showDialog(null);
-
-			gsonFieldPath.setText(selectedDirectory.getAbsolutePath() + File.separator);
+			if (selectedDirectory != null)
+				gsonFieldPath.setText(selectedDirectory.getAbsolutePath() + File.separator);
+			else
+				selectedDirectory = null;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

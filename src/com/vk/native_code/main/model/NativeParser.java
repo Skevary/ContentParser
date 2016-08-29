@@ -30,14 +30,10 @@ public class NativeParser extends Parser {
 		br.close();
 		return htmlPage.toString();
 	}
-
 	@Override
 	public void run() {
 		try {
 			URL url = new URL(getURL());
-			int itr=0;
-			long timeout = System.currentTimeMillis();
-			long start = Runtime.getRuntime().freeMemory();
 			String htmlPage = connect(url);
 
 			String re1 = ".*?"; // Non-greedy match on filler
@@ -62,7 +58,6 @@ public class NativeParser extends Parser {
 				File file = new File(getPath() + fileName);
 				if (!file.exists()) {
 					FileOutputStream fw = new FileOutputStream(file);
-					itr++;
 					byte[] b = new byte[1024];
 					int count = 0;
 					while ((count = bis.read(b)) != -1) {
@@ -70,20 +65,14 @@ public class NativeParser extends Parser {
 					}
 					controller.setTextToArea(fileName + "+\n");
 					fw.close();
-//					Thread.sleep(2000);
 				}
 			}
 			controller.setTextToArea("Success!\n");
-			System.out.println("Количество файлов: "+itr);
-			System.out.println("Время выполнения: " + (System.currentTimeMillis() - timeout) + " ms.");
-			System.out.println("Ресурсы: " + ((start-Runtime.getRuntime().freeMemory())/1000)+" kb.");
 			stop();
 		} catch (MalformedURLException e) {
 			controller.getNativeFieldURL().setText("Set URL field!");
 		} catch (IOException ex) {
 			ex.printStackTrace();
-//		} catch (InterruptedException e) {
-//			Thread.currentThread().interrupt();
 		}
 
 	}

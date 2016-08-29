@@ -23,7 +23,6 @@ public class Main extends Application {
 		initRoot();
 		initOverview();
 	}
-
 	private void initRoot() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
